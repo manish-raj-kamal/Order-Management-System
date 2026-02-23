@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { getOrderById, approveOrder, rejectOrder, completeOrder, deleteOrder } from '../api';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { toast } from 'react-toastify';
 
 const OrderDetail = () => {

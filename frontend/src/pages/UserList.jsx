@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import { getUsers, toggleUserStatus, deleteUser, createAdmin, updateUserPermissions } from '../api';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 const PERMISSION_LABELS = {
     canViewAuditLogs: 'View Audit Logs',

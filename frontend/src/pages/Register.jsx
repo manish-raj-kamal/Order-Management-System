@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { registerUser, verifyEmailOtp, resendEmailOtp } from '../api';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import GoogleAuthSection from '../components/GoogleAuthSection';
 
 const Register = () => {
