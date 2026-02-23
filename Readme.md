@@ -40,5 +40,5 @@ npm start
 npm run dev
 ```
 
-## AI Protection
-Environment files are protected from AI tools (Copilot, Cursor, etc.) via `.gitignore`, `.cursorignore`, `.copilotignore`, and `.aiignore`. Never commit `.env` files to version control.
+## Important Note
+Environment files are protected via `.gitignore`. Never commit `.env` files to version control.
