@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { createPassword } from '../api';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 const Profile = () => {
     const { user, token, login } = useAuth();
