@@ -1,0 +1,12 @@
+.env
+.env.*
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+**/*.pem
+**/*.key
+**/*.crt
+**/*.pfx
+**/*.p12
+secrets/
