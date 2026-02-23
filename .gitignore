@@ -42,3 +42,10 @@ frontend/.env.*
 backend/.env
 backend/.env.*
 !backend/.env.example
+
+# AI specific ignore files
+.aiignore
+.cursorignore
+.copilotignore
+.codexignore
+backend/.copilot-ignore
