@@ -1,13 +1,32 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { googleSignIn } from '../api';
 
 const GoogleAuthSection = ({ mode = 'signin' }) => {
     const googleButtonRef = useRef(null);
     const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-    const googleRedirectUri = import.meta.env.VITE_GOOGLE_REDIRECT_URI || 'http://localhost:4000/auth/google/callback';
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     useEffect(() => {
         if (!googleClientId || !googleButtonRef.current) return undefined;
         const scriptId = 'google-identity-script';
+
+        const handleCredentialResponse = async (response) => {
+            setError('');
+            try {
+                const { data } = await googleSignIn({ idToken: response.credential });
+                if (data.user && data.token) {
+                    login(data.user, data.token);
+                    navigate('/');
+                }
+            } catch (err) {
+                console.error('Google Sign-In error:', err);
+                setError(err.response?.data?.error || 'Google sign-in failed. Please try again.');
+            }
+        };
 
         const initGoogleButton = () => {
             if (!window.google?.accounts?.id || !googleButtonRef.current) return;
@@ -15,8 +34,7 @@ const GoogleAuthSection = ({ mode = 'signin' }) => {
             googleButtonRef.current.innerHTML = '';
             window.google.accounts.id.initialize({
                 client_id: googleClientId,
-                ux_mode: 'redirect',
-                login_uri: googleRedirectUri
+                callback: handleCredentialResponse
             });
             window.google.accounts.id.renderButton(googleButtonRef.current, {
                 theme: 'outline',
@@ -42,11 +60,12 @@ const GoogleAuthSection = ({ mode = 'signin' }) => {
         return () => {
             // no-op
         };
-    }, [googleClientId, googleRedirectUri, mode]);
+    }, [googleClientId, mode, navigate, login]);
 
     return (
         <>
             <div className="auth-link">or</div>
+            {error && <div className="error-msg" style={{ marginBottom: '1rem' }}>{error}</div>}
             <div className="google-depth-shell">
                 {googleClientId ? (
                     <div ref={googleButtonRef} className="google-signin"></div>
